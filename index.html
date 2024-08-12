@@ -11,9 +11,8 @@
 </head>
 <body onload="render()">
     <header>
-        
         <a href="#"><img src="./assets/icons/pokeball_icon2.png"><h2>Pokédex</h2></a>
-        <input type="text" placeholder="Search">
+        <input type="text" id="pokemon-filter" oninput="handleInput(event)" placeholder="Search">
     </header>
     <div id="content-box"></div>
     <button class="load-more-btn" onclick="increaseRenderCount()">Load more</button>

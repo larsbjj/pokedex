@@ -137,3 +137,6 @@ footer a {
     100% { transform: rotate(360deg); }
 }
 
+.new-card {
+    display: none;
+}

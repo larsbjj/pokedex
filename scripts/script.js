@@ -1,16 +1,10 @@
-let allPokemon = "";
-let currentPokemon = "";
-let currentImage = "";
-let currentType = "";
+let allPokemonData = [];
+let allPokemon = [];
 let renderCount = 10;
 
-async function render(newRenderCount) {
+async function render() {
     let contentRef = document.getElementById('content-box');
     contentRef.innerHTML = "";
-
-    if (newRenderCount != null) {
-        renderCount = newRenderCount; 
-    }
 
     for (let i = 1; i < renderCount; i++) {
         await fetchDataJson(i);
@@ -28,12 +22,16 @@ async function loadMorePokemon(renderCount, newRenderCount) {
 async function fetchDataJson(index) {
     let response = await fetch("https://pokeapi.co/api/v2/pokemon/" + index);
     let responseAsJson = await response.json();
-    allPokemon = responseAsJson;
-    currentPokemon = responseAsJson.name;
-    currentImage = responseAsJson.sprites.other["official-artwork"].front_default;
-    currentType = allPokemon.types[0].type.name;
-
-    renderPokemon(currentPokemon, index, currentImage, currentType);
+    let pokemonData = {
+        name: responseAsJson.name,
+        index: index,
+        image: responseAsJson.sprites.other["official-artwork"].front_default,
+        type: responseAsJson.types[0].type.name
+    };
+    
+    allPokemon.push(pokemonData.name);
+    allPokemonData.push(pokemonData);
+    renderPokemon(pokemonData.name, pokemonData.index, pokemonData.image, pokemonData.type);
 }
 
 function renderPokemon(currentPokemon, index, currentImage, currentType) {
@@ -109,8 +107,37 @@ function checkType(currentType) {
 
 async function increaseRenderCount() {
     document.getElementById('loading-spinner').style.display = 'block';
-    let newRenderCount = renderCount + 100;
+    let newRenderCount = renderCount + 18;
+    await delay(2000);
     await loadMorePokemon(renderCount, newRenderCount);
-    renderCount = renderCount + 100;
+    renderCount = renderCount + 18;
     document.getElementById('loading-spinner').style.display = 'none';
+}
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function filterAndShowNames(filterWord) {
+    // Convert the filter word to lowercase for case-insensitive comparison
+    filterWord = filterWord.toLowerCase();
+    
+    // Get filtered Pokémon names
+    let filteredNames = allPokemon.filter(name => name.toLowerCase().includes(filterWord));
+    
+    // Filter out the Pokémon objects based on their names
+    let filteredPokemon = allPokemonData.filter(pokemon => filteredNames.includes(pokemon.name.toLowerCase()));
+    
+    // Clear the content box before rendering
+    document.getElementById('content-box').innerHTML = '';
+    
+    // Render filtered Pokémon
+    filteredPokemon.forEach(pokemon => {
+        renderPokemon(pokemon.name, pokemon.index, pokemon.image, pokemon.type);
+    });
+}
+
+function handleInput(event) {
+    const filterWord = event.target.value.toLowerCase();
+    filterAndShowNames(filterWord);
 }
