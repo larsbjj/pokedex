@@ -16,11 +16,14 @@
         <input type="text" placeholder="Search">
     </header>
     <div id="content-box"></div>
+    <button class="load-more-btn" onclick="increaseRenderCount()">Load more</button>
     <footer>
-        <a href="#">Impressum</a>  
-        <a href="#">Privacy Policy</a>  
-        <a href="#">Contact</a>
+        <a href="#imprint" id="imprint">Impressum</a>  
+        <a href="#privacy-policy" id="privacy-policy">Privacy Policy</a>  
+        <a href="#contact" id="contact">Contact</a>
     </footer>
-    
+    <div id="loading-spinner" class="spinner" style="display: none;">
+        <div class="spinner-border"></div>
+    </div>
 </body>
 </html>

@@ -7,7 +7,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh; /* Ensure full viewport height */
-    background-color: #f0f0f0; /* Light background color */
+    background-color: white;
 }
 
 header {
@@ -87,4 +87,46 @@ footer a {
     text-align: right;
     font-size: 20px;
     color: rgba(255, 255, 255, 0.8);
+}
+
+.load-more-btn {
+    background-color: #3399FF; /* Hintergrundfarbe */
+    color: white; /* Textfarbe */
+    border: none; /* Keine Umrandung */
+    padding: 10px 20px; /* Innenabstand */
+    font-size: 16px; /* Schriftgröße */
+    border-radius: 25px; /* Abgerundete Ecken */
+    cursor: pointer; /* Zeigt die Hand als Mauszeiger an */
+    transition: background-color 0.3s ease; /* Weiche Farbänderung */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Leichter Schatten */
+}
+
+.load-more-btn:hover {
+    background-color: #2877cc; /* Etwas dunklerer Blauton beim Hover */
+}
+
+.load-more-btn:active {
+    background-color: #1e5fa6; /* Noch dunklerer Blauton beim Klicken */
+}
+
+.spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999; /* Ensure it’s on top */
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border: 0.4em solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 0.4em solid #000;
+    animation: spinner-border 0.75s linear infinite;
+}
+
+@keyframes spinner-border {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

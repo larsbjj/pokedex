@@ -2,27 +2,35 @@ let allPokemon = "";
 let currentPokemon = "";
 let currentImage = "";
 let currentType = "";
+let renderCount = 10;
 
-async function render() {
+async function render(newRenderCount) {
     let contentRef = document.getElementById('content-box');
     contentRef.innerHTML = "";
 
-    for (let i = 1; i < 11; i++) {
+    if (newRenderCount != null) {
+        renderCount = newRenderCount; 
+    }
+
+    for (let i = 1; i < renderCount; i++) {
         await fetchDataJson(i);
+    }
+}
+
+async function loadMorePokemon(renderCount, newRenderCount) {
+    if (newRenderCount != null) {
+        for (let i = renderCount; i < newRenderCount; i++) {
+            await fetchDataJson(i);
+        }
     }
 }
 
 async function fetchDataJson(index) {
     let response = await fetch("https://pokeapi.co/api/v2/pokemon/" + index);
     let responseAsJson = await response.json();
-    console.log(responseAsJson);
-    
     allPokemon = responseAsJson;
     currentPokemon = responseAsJson.name;
     currentImage = responseAsJson.sprites.other["official-artwork"].front_default;
-    
-    console.log(allPokemon.types[0].type.name);
-    
     currentType = allPokemon.types[0].type.name;
 
     renderPokemon(currentPokemon, index, currentImage, currentType);
@@ -97,4 +105,12 @@ function checkType(currentType) {
             break;
     }    
     return backgroundColor;    
+}
+
+async function increaseRenderCount() {
+    document.getElementById('loading-spinner').style.display = 'block';
+    let newRenderCount = renderCount + 9;
+    await loadMorePokemon(renderCount, newRenderCount);
+    renderCount = renderCount + 9;
+    document.getElementById('loading-spinner').style.display = 'none';
 }
