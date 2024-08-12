@@ -109,8 +109,8 @@ function checkType(currentType) {
 
 async function increaseRenderCount() {
     document.getElementById('loading-spinner').style.display = 'block';
-    let newRenderCount = renderCount + 9;
+    let newRenderCount = renderCount + 100;
     await loadMorePokemon(renderCount, newRenderCount);
-    renderCount = renderCount + 9;
+    renderCount = renderCount + 100;
     document.getElementById('loading-spinner').style.display = 'none';
 }
