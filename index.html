@@ -10,6 +10,8 @@
     <script src="./scripts/templates.js"></script>
 </head>
 <body onload="render()">
+    <div id="overlay" class="d-none">
+    </div>
     <header>
         <a href="#"><img src="./assets/icons/pokeball_icon2.png"><h2>Pokédex</h2></a>
         <input type="text" id="pokemon-filter" oninput="handleInput(event)" placeholder="Search">
@@ -25,6 +27,5 @@
         <img src="./assets/icons/pokeball_icon.png" class="pokeball">
         <p class="loading-text">Loading...</p>
     </div>
-
 </body>
 </html>

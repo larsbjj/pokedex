@@ -22,23 +22,28 @@ async function loadMorePokemon(renderCount, newRenderCount) {
 async function fetchDataJson(index) {
     let response = await fetch("https://pokeapi.co/api/v2/pokemon/" + index);
     let responseAsJson = await response.json();
+    for (let index = 0; index < responseAsJson.types.length; index++) {
+        console.log(responseAsJson.types[index].type.name);
+    }
+    
     let pokemonData = {
         name: responseAsJson.name,
         index: index,
         image: responseAsJson.sprites.other["official-artwork"].front_default,
-        type: responseAsJson.types[0].type.name
+        types: [responseAsJson.types[0].type.name, responseAsJson.types[1]?.type.name].filter(Boolean)
     };
     
     allPokemon.push(pokemonData.name);
     allPokemonData.push(pokemonData);
-    renderPokemon(pokemonData.name, pokemonData.index, pokemonData.image, pokemonData.type);
+    renderPokemon(pokemonData.name, pokemonData.index, pokemonData.image, pokemonData.types[0], pokemonData.types[1]);
 }
 
-function renderPokemon(currentPokemon, index, currentImage, currentType) {
+function renderPokemon(currentPokemon, index, currentImage, currentType, secondType) {
     let contentRef = document.getElementById('content-box');
     let backgroundColor = checkType(currentType);
 
-    contentRef.innerHTML += getCartTemplate(currentPokemon, index, currentImage, backgroundColor);
+    currentPokemon = capitalizeFirstLetter(currentPokemon);
+    contentRef.innerHTML += getCartTemplate(currentPokemon, index, currentImage, backgroundColor, currentType, secondType);
 }
 
 function checkType(currentType) {
@@ -107,10 +112,10 @@ function checkType(currentType) {
 
 async function increaseRenderCount() {
     document.getElementById('loading-spinner').style.display = 'block';
-    let newRenderCount = renderCount + 18;
-    await delay(2000);
+    let newRenderCount = renderCount + 100;
+    await delay(1000);
     await loadMorePokemon(renderCount, newRenderCount);
-    renderCount = renderCount + 18;
+    renderCount = renderCount + 100;
     document.getElementById('loading-spinner').style.display = 'none';
 }
 
@@ -119,25 +124,38 @@ function delay(ms) {
 }
 
 function filterAndShowNames(filterWord) {
-    // Convert the filter word to lowercase for case-insensitive comparison
     filterWord = filterWord.toLowerCase();
     
-    // Get filtered Pokémon names
-    let filteredNames = allPokemon.filter(name => name.toLowerCase().includes(filterWord));
-    
-    // Filter out the Pokémon objects based on their names
-    let filteredPokemon = allPokemonData.filter(pokemon => filteredNames.includes(pokemon.name.toLowerCase()));
+    // Filter Pokémon data directly
+    let filteredPokemon = allPokemonData.filter(pokemon => 
+        pokemon.name.toLowerCase().includes(filterWord)
+    );
     
     // Clear the content box before rendering
     document.getElementById('content-box').innerHTML = '';
     
     // Render filtered Pokémon
     filteredPokemon.forEach(pokemon => {
-        renderPokemon(pokemon.name, pokemon.index, pokemon.image, pokemon.type);
+        renderPokemon(
+            pokemon.name, 
+            pokemon.index, 
+            pokemon.image, 
+            pokemon.types[0], 
+            pokemon.types[1]
+        );
     });
 }
 
 function handleInput(event) {
     const filterWord = event.target.value.toLowerCase();
     filterAndShowNames(filterWord);
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function toggleOverlay() {
+    let overlayRef = document.getElementById('overlay');
+    overlayRef.classList.toggle('d-none');
 }

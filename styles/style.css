@@ -59,13 +59,27 @@ footer a {
     max-width: 80vw;
 }
 
+#overlay {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.76);
+    z-index: 1000; /* Ensures the overlay is on top of other elements */
+}
+
+.d-none {
+    display: none;
+}
+
 .card {
     width: 300px;
     height: 300px;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     color: white;
@@ -73,15 +87,40 @@ footer a {
     cursor: pointer;
 }
 
+.card:hover {
+    filter: brightness(120%);
+}
+
 .card h2 {
     font-size: 36px;
     margin: 0;
+    
 }
 
 .card img {
     height: 150px;
     object-fit: contain;
 }
+
+.card:hover .pokemon-image img {
+    transform: scale(1.2);
+    transition: transform 0.1s ease-in-out;
+}
+
+.pokemon-image {
+    display: flex;
+    justify-content: center;
+}
+
+
+.card span {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px
+}
+
 
 .number {
     text-align: right;
@@ -139,4 +178,9 @@ footer a {
 
 .new-card {
     display: none;
+}
+
+.pokemon-types img {
+    height: 48px;
+    width: 48px;
 }
