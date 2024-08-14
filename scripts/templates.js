@@ -36,6 +36,10 @@ function getPokemonCardTemplate(index, currentType) {
             <img src="${allPokemonData[index].image}">
         </div>
     </div>
+    <div class="pokemon-image-slider">
+        <button class="slider-btn prev" onclick="changePokemonCard(${-1}, ${index})";>❮</button>
+        <button class="slider-btn next" onclick="changePokemonCard(${1}, ${index})";>❯</button>
+    </div>
     <div class="pokemon-card-details">
         <ul class="pokemon-tabs">
             <li class="pokemon-tab active" id="pokemon-tab-about" onclick="changePokemonTab('about');">About</li>

@@ -1,14 +1,17 @@
 let allPokemonData = [];
 let allPokemon = [];
-let renderCount = 10;
+let renderCount = 16;
 
 async function render() {
     let contentRef = document.getElementById('content-box');
     contentRef.innerHTML = "";
-
+    document.getElementById('loading-spinner').style.display = 'block';
+    await delay(1000);
+ 
     for (let i = 1; i < renderCount; i++) {
         await fetchDataJson(i);
     }
+    document.getElementById('loading-spinner').style.display = 'none';
 }
 
 async function loadMorePokemon(renderCount, newRenderCount) {
@@ -40,8 +43,6 @@ async function fetchDataJson(index) {
             responseAsJson.abilities[2]?.ability?.name
           ].filter(Boolean)
     };
-
-    console.log(responseAsJson);
     
     allPokemon.push(pokemonData.name);
     allPokemonData.push(pokemonData);
@@ -122,10 +123,10 @@ function checkType(currentType) {
 
 async function increaseRenderCount() {
     document.getElementById('loading-spinner').style.display = 'block';
-    let newRenderCount = renderCount + 9;
+    let newRenderCount = renderCount + 15;
     await delay(1000);
     await loadMorePokemon(renderCount, newRenderCount);
-    renderCount = renderCount + 9;
+    renderCount = renderCount + 15;
     document.getElementById('loading-spinner').style.display = 'none';
 }
 
@@ -141,7 +142,6 @@ function filterAndShowNames(filterWord) {
         pokemon.name.toLowerCase().includes(filterWord)
     );
     
-    // Clear the content box before rendering
     const contentBox = document.getElementById('content-box');
     contentBox.innerHTML = '';
     
@@ -174,6 +174,16 @@ function capitalizeFirstLetter(string) {
 function toggleOverlay() {
     let overlayRef = document.getElementById('overlay');
     overlayRef.classList.toggle('d-flex');
+    
+    const isOverlayVisible = overlayRef.style.display === 'flex';
+    
+    if (isOverlayVisible) {
+        overlay.style.display = 'none';
+        document.body.classList.remove('no-scroll');
+    } else {
+        overlay.style.display = 'flex';
+        document.body.classList.add('no-scroll');
+    }
 }
 
 function renderPokemonCard(index, currentType) {
@@ -207,3 +217,28 @@ function renderPokemonCard(index, currentType) {
         baseStatsContent.style.display = 'block';
     }
 }
+
+function changePokemonCard(direction, index) {
+    let adjustedIndex = index;
+    let pokemonIndex;
+
+    switch (direction) {
+        case 1:
+            adjustedIndex += 2;
+            break;
+        case -1:
+            break;
+        default:
+            return;
+    }
+
+    pokemonIndex = adjustedIndex - 1;
+
+    if (pokemonIndex < 0 || pokemonIndex >= allPokemonData.length) {
+        return; 
+    }
+
+    const currentType = allPokemonData[pokemonIndex].types[0];
+    renderPokemonCard(adjustedIndex, currentType);
+}
+

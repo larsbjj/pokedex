@@ -6,8 +6,12 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Ensure full viewport height */
+    min-height: 100vh; 
     background-color: white;
+}
+
+body.no-scroll {
+    overflow: hidden;
 }
 
 header {
@@ -67,8 +71,8 @@ footer a {
 #content-box {
     min-height: 400px;
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping to next row */
-    justify-content: center; /* Center align cards */
+    flex-wrap: wrap; 
+    justify-content: center; 
     align-content: center;
     max-width: 80vw;
 }
@@ -82,7 +86,7 @@ footer a {
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.76);
-    z-index: 1000; /* Ensures the overlay is on top of other elements */
+    z-index: 1000; 
 }
 
 .d-none {
@@ -94,21 +98,21 @@ footer a {
 }
 
 .load-more-btn {
-    background-color: #3399FF; /* Hintergrundfarbe */
-    color: white; /* Textfarbe */
-    border: none; /* Keine Umrandung */
-    padding: 10px 20px; /* Innenabstand */
-    font-size: 16px; /* Schriftgröße */
-    border-radius: 25px; /* Abgerundete Ecken */
-    cursor: pointer; /* Zeigt die Hand als Mauszeiger an */
-    transition: background-color 0.3s ease; /* Weiche Farbänderung */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Leichter Schatten */
+    background-color: #3399FF; 
+    color: white;
+    border: none; 
+    padding: 10px 20px; 
+    font-size: 16px; 
+    border-radius: 25px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
 .load-more-btn:hover {
-    background-color: #2877cc; /* Etwas dunklerer Blauton beim Hover */
+    background-color: #2877cc; 
 }
 
 .load-more-btn:active {
-    background-color: #1e5fa6; /* Noch dunklerer Blauton beim Klicken */
+    background-color: #1e5fa6;
 }

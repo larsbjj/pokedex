@@ -1,4 +1,5 @@
 .pokemon-card {
+    position: relative;
     width: 400px;
     height: 625px;
     border-radius: 15px;
@@ -10,6 +11,7 @@
 }
 
 .pokemon-card-header {
+    position: relative;
     padding: 20px;
     background-color: inherit;
     text-align: center;
@@ -20,14 +22,14 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
-    position: relative; /* To position the close button */
+    position: relative; 
 }
 
 .pokemon-card-header h2 {
     font-size: 36px;
     margin: 0;
-    flex-grow: 1; /* Makes the header text take up remaining space */
-    text-align: center; /* Centers the header text */
+    flex-grow: 1; 
+    text-align: center; 
 }
 
 .pokemon-number {
@@ -45,18 +47,6 @@
     justify-content: center;
     gap: 5px;
     margin-bottom: 15px;
-}
-
-.pokemon-image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 150px;
-}
-
-.pokemon-image img {
-    max-height: 100%;
-    transition: transform 0.1s ease-in-out;
 }
 
 .pokemon-card-details {
@@ -99,7 +89,7 @@
 }
 
 .close-btn {
-    background: rgb(107, 102, 102);
+    background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
     border: none;
     border-radius: 50%;
@@ -109,4 +99,50 @@
     text-align: center;
     line-height: 30px;
     cursor: pointer;
+}
+
+.pokemon-image {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+}
+
+.pokemon-image img {
+    max-height: 100%;
+    transition: transform 0.1s ease-in-out;
+}
+
+.pokemon-image-slider {
+    position: absolute; /* Positioning within the pokemon-image container */
+    top: 30%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: auto; 
+    z-index: 1;
+}
+
+.slider-btn {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.prev {
+    position: absolute;
+    left: 10px; 
+}
+
+.next {
+    position: absolute;
+    right: 10px; 
 }
