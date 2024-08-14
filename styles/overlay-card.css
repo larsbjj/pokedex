@@ -1,0 +1,112 @@
+.pokemon-card {
+    width: 400px;
+    height: 625px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: white;
+    margin: 10px;
+    background-color: #739C77;
+}
+
+.pokemon-card-header {
+    padding: 20px;
+    background-color: inherit;
+    text-align: center;
+}
+
+.pokemon-card-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative; /* To position the close button */
+}
+
+.pokemon-card-header h2 {
+    font-size: 36px;
+    margin: 0;
+    flex-grow: 1; /* Makes the header text take up remaining space */
+    text-align: center; /* Centers the header text */
+}
+
+.pokemon-number {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.pokemon-types-card img {
+    height: 48px;
+    width: 48px;
+}
+
+.pokemon-types-card {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.pokemon-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+}
+
+.pokemon-image img {
+    max-height: 100%;
+    transition: transform 0.1s ease-in-out;
+}
+
+.pokemon-card-details {
+    background-color: white;
+    color: black;
+    padding: 15px;
+    height: -webkit-fill-available;
+}
+
+.pokemon-tabs {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 2px solid #ddd;
+}
+
+.pokemon-tab {
+    padding: 10px;
+    cursor: pointer;
+    color: #666;
+}
+
+.active {
+    border-bottom: 2px solid #739C77;
+    color: #000;
+}
+
+.pokemon-tab-content {
+    padding: 10px 0;
+}
+
+.pokemon-about {
+    display: block;
+}
+
+.pokemon-base-stats, .pokemon-evolution {
+    display: none;
+}
+
+.close-btn {
+    background: rgb(107, 102, 102);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 25px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+}

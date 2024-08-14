@@ -22,16 +22,26 @@ async function loadMorePokemon(renderCount, newRenderCount) {
 async function fetchDataJson(index) {
     let response = await fetch("https://pokeapi.co/api/v2/pokemon/" + index);
     let responseAsJson = await response.json();
-    for (let index = 0; index < responseAsJson.types.length; index++) {
-        console.log(responseAsJson.types[index].type.name);
-    }
     
     let pokemonData = {
         name: responseAsJson.name,
         index: index,
         image: responseAsJson.sprites.other["official-artwork"].front_default,
-        types: [responseAsJson.types[0].type.name, responseAsJson.types[1]?.type.name].filter(Boolean)
+        height: responseAsJson.height,
+        weight: responseAsJson.weight,
+        stats: responseAsJson.stats,
+        types: [
+            responseAsJson.types[0].type.name,
+            responseAsJson.types[1]?.type.name
+        ].filter(Boolean),
+        abilities: [
+            responseAsJson.abilities[0].ability.name,
+            responseAsJson.abilities[1]?.ability?.name,
+            responseAsJson.abilities[2]?.ability?.name
+          ].filter(Boolean)
     };
+
+    console.log(responseAsJson);
     
     allPokemon.push(pokemonData.name);
     allPokemonData.push(pokemonData);
@@ -43,7 +53,7 @@ function renderPokemon(currentPokemon, index, currentImage, currentType, secondT
     let backgroundColor = checkType(currentType);
 
     currentPokemon = capitalizeFirstLetter(currentPokemon);
-    contentRef.innerHTML += getCartTemplate(currentPokemon, index, currentImage, backgroundColor, currentType, secondType);
+    contentRef.innerHTML += getCardTemplate(currentPokemon, index, currentImage, backgroundColor, currentType, secondType);
 }
 
 function checkType(currentType) {
@@ -112,10 +122,10 @@ function checkType(currentType) {
 
 async function increaseRenderCount() {
     document.getElementById('loading-spinner').style.display = 'block';
-    let newRenderCount = renderCount + 100;
+    let newRenderCount = renderCount + 9;
     await delay(1000);
     await loadMorePokemon(renderCount, newRenderCount);
-    renderCount = renderCount + 100;
+    renderCount = renderCount + 9;
     document.getElementById('loading-spinner').style.display = 'none';
 }
 
@@ -132,18 +142,24 @@ function filterAndShowNames(filterWord) {
     );
     
     // Clear the content box before rendering
-    document.getElementById('content-box').innerHTML = '';
+    const contentBox = document.getElementById('content-box');
+    contentBox.innerHTML = '';
     
-    // Render filtered Pokémon
-    filteredPokemon.forEach(pokemon => {
-        renderPokemon(
-            pokemon.name, 
-            pokemon.index, 
-            pokemon.image, 
-            pokemon.types[0], 
-            pokemon.types[1]
-        );
-    });
+    // Check if any Pokémon were found
+    if (filteredPokemon.length === 0) {
+        contentBox.innerHTML = 'Nothing was found';
+    } else {
+        // Render filtered Pokémon
+        filteredPokemon.forEach(pokemon => {
+            renderPokemon(
+                pokemon.name, 
+                pokemon.index, 
+                pokemon.image, 
+                pokemon.types[0], 
+                pokemon.types[1]
+            );
+        });
+    }
 }
 
 function handleInput(event) {
@@ -157,5 +173,37 @@ function capitalizeFirstLetter(string) {
 
 function toggleOverlay() {
     let overlayRef = document.getElementById('overlay');
-    overlayRef.classList.toggle('d-none');
+    overlayRef.classList.toggle('d-flex');
+}
+
+function renderPokemonCard(index, currentType) {
+    index = index -1;
+    let overlayRef = document.getElementById('overlay');
+    overlayRef.innerHTML = '';
+
+    currentType = checkType(currentType);
+    overlayRef.innerHTML = getPokemonCardTemplate(index, currentType);
+ }
+
+ function preventEventBubbling(event) {
+    event.stopPropagation();
+ }
+
+ function changePokemonTab(activeTab) {
+    const aboutTab = document.getElementById('pokemon-tab-about');
+    const baseStatsTab = document.getElementById('pokemon-tab-base-stats');
+    const aboutContent = document.querySelector('.pokemon-about');
+    const baseStatsContent = document.querySelector('.pokemon-base-stats');
+
+    if (activeTab === 'about') {
+        aboutTab.classList.add('active');
+        baseStatsTab.classList.remove('active');
+        aboutContent.style.display = 'block';
+        baseStatsContent.style.display = 'none';
+    } else if (activeTab === 'base-stats') {
+        aboutTab.classList.remove('active');
+        baseStatsTab.classList.add('active');
+        aboutContent.style.display = 'none';
+        baseStatsContent.style.display = 'block';
+    }
 }
